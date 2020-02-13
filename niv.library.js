@@ -1,5 +1,5 @@
 var niv = niv || {};
-niv.lib = niv.utils || {};
+niv.utils = niv.utils || {};
 
 (function() {
   var pad2 = function(number) {
