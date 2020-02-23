@@ -1,0 +1,131 @@
+.multiselect-dropdown {
+  width: 200px;
+}
+
+.ms-selectbox {
+  position: relative;
+  cursor: pointer;
+}
+
+.select-button {
+  font-weight: 500;
+  padding: 3px 4px;
+  border: 1px solid #a3a3a3;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
+
+/*.select-button:hover {
+    background-color: #0077cc;
+    color: white;
+}*/
+
+/*.ms-selectbox select {
+    width: 100%;
+    font-weight: bold;
+}*/
+
+.ms-dropdown-placeholder {
+  text-align: center;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.ms-overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.ms-dropdown-chkbox {
+  display: none;
+  border: 1px #dadada solid;
+  z-index: 1000;
+  position: absolute;
+  background: #eff0f1;
+  width: 197px;
+}
+
+.ms-dropdown-chkbox label {
+  display: block;
+  white-space: nowrap;
+  word-break: break-word;
+  padding: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ms-dropdown-chkbox label:hover {
+  background-color: #1e90ff;
+}
+
+.ms-dropdown-chkbox .checkboxes {
+  margin-top: 4px;
+  border-top: 1px #dadada solid;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+.ms-dropdown-chkbox .btn-dropdown-select,
+.ms-dropdown-chkbox .btn-dropdown-filter {
+  margin: 4px 2px;
+  color: white;
+  padding: 3px;
+  cursor: pointer;
+  font-size: smaller;
+  border: 0px;
+  border-radius: 4px;
+  box-shadow: 1px 1px #888888;
+  min-width: 10px;
+}
+
+.btn-dropdown-select {
+  background: #0077cc;
+}
+
+.btn-dropdown-select:hover {
+  background: #0068b3;
+}
+
+.btn-dropdown-filter {
+  background: #e6b800;
+}
+
+.btn-dropdown-filter:hover {
+  background: #cca300;
+}
+
+.btn-dropdown-filter-name {
+  width: 100%;
+  margin: 0px;
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filter-options-search {
+  border-radius: 3px;
+  margin: 4px;
+  width: 130px;
+  cursor: text;
+  /*box-shadow: 1px 1px #888;*/
+}
+
+.btn-dropdown-close {
+  cursor: pointer;
+  margin: 3px;
+  float: right;
+  background: transparent;
+  min-width: 10px;
+  padding: 0px;
+  border: 0px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.multiselect-dropdown {
+  margin-left: 15px;
+  display: inline-block;
+}
