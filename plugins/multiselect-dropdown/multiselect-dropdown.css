@@ -10,33 +10,20 @@
 .select-button {
   font-weight: 500;
   padding: 3px 4px;
-  border: 1px solid #a3a3a3;
+  border: 1px solid #b9b5b5;
   border-radius: 5px;
   background-color: #f8f8f8;
+  cursor: pointer;
 }
 
-/*.select-button:hover {
-    background-color: #0077cc;
-    color: white;
-}*/
-
-/*.ms-selectbox select {
-    width: 100%;
-    font-weight: bold;
-}*/
+.select-button:hover {
+  background-color: #e2e2e2;
+}
 
 .ms-dropdown-placeholder {
   text-align: center;
   font-size: smaller;
   font-weight: bold;
-}
-
-.ms-overSelect {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
 }
 
 .ms-dropdown-chkbox {
@@ -66,6 +53,7 @@
   border-top: 1px #dadada solid;
   max-height: 350px;
   overflow-y: scroll;
+  cursor: pointer;
 }
 
 .ms-dropdown-chkbox .btn-dropdown-select,
@@ -74,7 +62,7 @@
   color: white;
   padding: 3px;
   cursor: pointer;
-  font-size: smaller;
+  font-size: 70%;
   border: 0px;
   border-radius: 4px;
   box-shadow: 1px 1px #888888;
@@ -121,7 +109,7 @@
   min-width: 10px;
   padding: 0px;
   border: 0px;
-  font-size: 18px;
+  font-size: 80%;
   font-weight: 800;
 }
 

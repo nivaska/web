@@ -1,6 +1,6 @@
 var niv = niv || {};
 niv.plugins = niv.plugins || {};
-niv.plugins.betterSelect = niv.plugins.betterSelect || {};
+niv.plugins.multiselect = niv.plugins.multiselect || {};
 
 (function() {
   this.closeDropdown = function() {
@@ -64,24 +64,22 @@ niv.plugins.betterSelect = niv.plugins.betterSelect || {};
     }
   };
 
-  var getCustomFilterHtml = function(controlLabel, optionsHtml) {
+  var getCustomFilterHtml = function(controlLabel, optionsHtml, executeBtn) {
     var returnString =
       '<div class="multiselect-dropdown" >' +
-      '    <div class="ms-selectbox" onclick="niv.plugins.betterSelect.toggleDropdown()">' +
-      '      <div class="select-button">' +
+      '    <div class="ms-selectbox">' +
+      '      <div class="select-button" onclick="niv.plugins.multiselect.toggleDropdown()">' +
       controlLabel +
       '<span style="float:right">&#x25BC;</span></div>' +
-      '      <div class="ms-overSelect"></div>' +
-      "    </div>" +
       '    <div class="ms-dropdown-chkbox">' +
       "      <div>" +
-      '        <button id="select-all" class="btn-dropdown-select" onclick="niv.plugins.betterSelect.selectUnselectAll(true)">Select All</button>' +
-      '        <button id="unselect-all" class="btn-dropdown-select" onclick="niv.plugins.betterSelect.selectUnselectAll(false)">Clear All</button>       ' +
-      '        <button class="btn-dropdown-filter" onclick="niv.plugins.betterSelect.executeSelected()">Filter</button>' +
-      '        <button title="Close" class="btn-dropdown-close" onclick="niv.plugins.betterSelect.closeDropdown()">x</button>' +
+      '        <button id="select-all" class="btn-dropdown-select" onclick="niv.plugins.multiselect.selectUnselectAll(true)">Select All</button>' +
+      '        <button id="unselect-all" class="btn-dropdown-select" onclick="niv.plugins.multiselect.selectUnselectAll(false)">Clear All</button>       ' +
+      executeBtn +
+      '        <button title="Close" class="btn-dropdown-close" onclick="niv.plugins.multiselect.closeDropdown()">x</button>' +
       "      </div>" +
       "      <div>" +
-      '        <input type="text" class="filter-options-search" autocomplete="off" oninput="niv.plugins.betterSelect.searchFilters()" placeholder="Search..." id="searchDropDown" value=""/>' +
+      '        <input type="text" class="filter-options-search" autocomplete="off" oninput="niv.plugins.multiselect.searchFilters()" placeholder="Search..." id="searchDropDown" value=""/>' +
       "      </div>" +
       '      <div class="checkboxes">' +
       optionsHtml +
@@ -90,6 +88,14 @@ niv.plugins.betterSelect = niv.plugins.betterSelect || {};
       "  </div>";
 
     return returnString;
+  };
+
+  var executeSelectedBtn = function(showButton) {
+    if (showButton === true) {
+      return '<button class="btn-dropdown-filter" onclick="niv.plugins.multiselect.executeSelected()">Execute</button>';
+    }
+
+    return "";
   };
 
   var insertOptions = function(optionsList) {
@@ -112,24 +118,34 @@ niv.plugins.betterSelect = niv.plugins.betterSelect || {};
 
   this.init = function(targetElement, options) {
     $(targetElement).html(
-      getCustomFilterHtml(options.label, insertOptions(options.list))
+      getCustomFilterHtml(
+        options.label,
+        insertOptions(options.dropdownList),
+        executeSelectedBtn(options.showExecuteButton)
+      )
     );
 
-    this.customExecuteHandler = options.executeSelected;
+    if (options.showExecuteButton === true) {
+      this.customExecuteHandler = options.executeSelected;
+    }
   };
-}.apply(niv.plugins.betterSelect));
+}.apply(niv.plugins.multiselect));
 
 (function($) {
-  $.fn.betterSelect = function(options) {
+  $.fn.multiselect = function(options) {
     // This is the easiest way to have default options.
     var settings = $.extend(
       {
-        list: [],
-        listGetter: function() {},
+        dropdownList: [],
         label: "Select Options",
-        showExecuteButton: true,
+        showExecuteButton: false,
         executeSelected: function(selectedOptions) {
-          alert(selectedOptions.length);
+          alert(
+            "No 'executeSelected' function configured in the options." +
+              "\nExecuting the default function.\n\n" +
+              selectedOptions.length +
+              " options selected"
+          );
         }
       },
       options
@@ -137,7 +153,7 @@ niv.plugins.betterSelect = niv.plugins.betterSelect || {};
 
     var targetElement = this.filter("div");
     if (targetElement.length > 0) {
-      niv.plugins.betterSelect.init(targetElement[0], settings);
+      niv.plugins.multiselect.init(targetElement[0], settings);
     }
   };
 })(jQuery);
