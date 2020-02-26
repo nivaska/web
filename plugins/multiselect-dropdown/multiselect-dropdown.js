@@ -5,13 +5,13 @@ niv.plugins.multiselect = niv.plugins.multiselect || {};
 (function() {
   this.closeDropdown = function() {
     var dropDownParent = $(event.target).closest(".multiselect-dropdown");
-    dropDownParent.find(".ms-dropdown-chkbox").hide();
+    dropDownParent.find(".ms-dropdown-chkbox").slideUp(300);
     event.preventDefault();
   };
 
   this.toggleDropdown = function() {
     var dropDownParent = $(event.target).closest(".multiselect-dropdown");
-    dropDownParent.find(".ms-dropdown-chkbox").toggle();
+    dropDownParent.find(".ms-dropdown-chkbox").slideToggle(300);
     event.preventDefault();
   };
 
@@ -116,6 +116,18 @@ niv.plugins.multiselect = niv.plugins.multiselect || {};
     return outputHtml;
   };
 
+  this.selectedValues = function(targetElement) {
+    var selectedValues = [];
+    var dropDownParent = $(targetElement).find(".multiselect-dropdown");
+
+    $(dropDownParent)
+      .find(".ms-dropdown-chkbox input:checked")
+      .each(function() {
+        selectedValues.push($(this).val());
+      });
+    return selectedValues;
+  };
+
   this.init = function(targetElement, options) {
     $(targetElement).html(
       getCustomFilterHtml(
@@ -133,7 +145,6 @@ niv.plugins.multiselect = niv.plugins.multiselect || {};
 
 (function($) {
   $.fn.multiselect = function(options) {
-    // This is the easiest way to have default options.
     var settings = $.extend(
       {
         dropdownList: [],
@@ -151,9 +162,13 @@ niv.plugins.multiselect = niv.plugins.multiselect || {};
       options
     );
 
-    var targetElement = this.filter("div");
+    var targetElement = $(this).filter("div");
     if (targetElement.length > 0) {
       niv.plugins.multiselect.init(targetElement[0], settings);
     }
+
+    this.getSelectedValues = niv.plugins.multiselect.selectedValues(
+      targetElement[0]
+    );
   };
 })(jQuery);
