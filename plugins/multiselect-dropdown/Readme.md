@@ -14,7 +14,7 @@ Following configuration options are available:
 - "dropdownList": set the list of string choices to be dispayed in the dropdown
 - "showExecuteButton": set the boolean option to true to display "Execute" button
 - "executeSelected": set the function to be executed when the "Execute" button is clicked
-  - function received an array parameter containing the selected list values
+  - function receives an array parameter containing the selected list values
 
 ### Example
 
@@ -28,3 +28,5 @@ $("#testDiv").multiselect({
   }
 });
 ```
+
+![](/readme-img-1.jpg)
