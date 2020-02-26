@@ -29,4 +29,4 @@ $("#testDiv").multiselect({
 });
 ```
 
-![](/readme-img-1.jpg)
+![Example](readme-img-1.jpg)
