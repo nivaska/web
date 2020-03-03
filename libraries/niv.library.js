@@ -1,5 +1,6 @@
 var niv = niv || {};
 niv.utils = niv.utils || {};
+niv.utils.dom = niv.utils.dom || {};
 
 (function() {
   var pad2 = function(number) {
@@ -43,3 +44,31 @@ niv.utils = niv.utils || {};
       .replace(/'/g, "%27");
   };
 }.apply(niv.utils));
+
+(function() {
+  this.getClickCords = function(e) {
+    var posx = 0;
+    var posy = 0;
+
+    if (!e) var e = window.event;
+
+    if (e.pageX || e.pageY) {
+      posx = e.pageX;
+      posy = e.pageY;
+    } else if (e.clientX || e.clientY) {
+      posx =
+        e.clientX +
+        document.body.scrollLeft +
+        document.documentElement.scrollLeft;
+      posy =
+        e.clientY +
+        document.body.scrollTop +
+        document.documentElement.scrollTop;
+    }
+
+    return {
+      x: posx,
+      y: posy
+    };
+  };
+}.apply(niv.utils.dom));
