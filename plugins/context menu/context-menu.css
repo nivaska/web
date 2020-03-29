@@ -1,15 +1,18 @@
 .context-menu {
   position: absolute;
   z-index: 10;
-  background: white;
-  padding: 10px;
-  border: 1px solid black;
+  font-family: Arial;
+  font-weight: 400;
+  font-size: 14px;
+  /* padding: 10px; */
 }
 
 .context-menu-items {
+  background: white;
+  border: 1px solid black;
   padding: 7px 3px;
   cursor: pointer;
-  font-weight: 700;
+  display: inline-block;
 }
 
 .context-menu[data-active="false"] {
@@ -18,4 +21,39 @@
 
 .context-menu[data-active="true"] {
   display: block;
+}
+
+.context-menu-item {
+  display: block;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 3px 10px 3px 2px;
+}
+
+.context-menu-item:hover {
+  background: gray;
+  color: beige;
+}
+
+.context-menu-item:focus {
+  outline: none;
+}
+
+.context-menu-extension {
+  vertical-align: middle;
+}
+
+.context-menu-extension[data-active="false"] {
+  display: none;
+}
+
+.context-menu-extension[data-active="true"] {
+  display: inline-block;
+  background: white;
+  border: 1px solid black;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: scroll;
+  padding: 5px;
 }

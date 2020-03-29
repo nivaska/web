@@ -6,16 +6,94 @@ niv.plugins.contextmenu = niv.plugins.contextmenu || {};
   var ctxmenu =
     '<nav id="plugin-context-menu" data-active="false" class="context-menu">' +
     '  <div class="context-menu-items">' +
-    '  <div onclick="">' +
-    "Copy to clipboard";
-  "  </div>" + "  </div>" + "</nav>";
+    '  <button onclick="niv.plugins.contextmenu.checkUrbanDictioanry()" class="context-menu-item">' +
+    "Search Urban Dictionary" +
+    " </button>" +
+    '  <button onclick="niv.plugins.contextmenu.copyToClipboard()" class="context-menu-item">' +
+    "Copy to clipboard" +
+    " </button>" +
+    '  <button onclick="niv.plugins.contextmenu.SearchWiki()" class="context-menu-item">' +
+    "Search Wiki" +
+    " </button>" +
+    "  </div>" +
+    '  <div class="context-menu-extension" data-active="false">' +
+    "  </div>" +
+    "</nav>";
 
-  var checkClickedInsideElement = function(e, parentElement) {
-    var el = e.srcElement || e.target;
-    if ($(parentElement).contains(el)) {
-      return el;
+  var toggelExtensionOff = function() {
+    $(".context-menu-extension").html("");
+    $(".context-menu-extension").attr("data-active", "false");
+  };
+
+  var getSelectionText = function() {
+    var text = "";
+    if (window.getSelection) {
+      text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+      text = document.selection.createRange().text;
     }
-    return false;
+    return text;
+  };
+
+  this.SearchWiki = function() {
+    $(".context-menu-extension")
+      .attr("data-active", "true")
+      .html("Getting results..");
+
+    fetch(
+      "http://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=" +
+        getSelectionText(),
+      {
+        method: "GET"
+      }
+    )
+      .then(response => {
+        var results = response.json();
+        results.then(data => {
+          // $(".context-menu-extension").html(data);
+          $(".context-menu-extension").html(data.query.search[0]["snippet"]);
+        });
+      })
+      .catch(err => {
+        $(".context-menu-extension").html("Error getting results");
+      });
+  };
+  this.checkUrbanDictioanry = function() {
+    $(".context-menu-extension")
+      .attr("data-active", "true")
+      .html("Getting results..");
+
+    fetch(
+      "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" +
+        getSelectionText(),
+      {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host":
+            "mashape-community-urban-dictionary.p.rapidapi.com",
+          "x-rapidapi-key": "c2020e1d85msh5f7543791f8e0bbp1702f9jsn10420dd9998d"
+        }
+      }
+    )
+      .then(response => {
+        var results = response.json();
+        results.then(data => {
+          $(".context-menu-extension").html(data.list[0]["definition"]);
+        });
+      })
+      .catch(err => {
+        $(".context-menu-extension").html("Error getting results");
+      });
+  };
+
+  this.copyToClipboard = function() {
+    toggelExtensionOff();
+
+    var $temp = $("<textarea>");
+    $("body").append($temp);
+    $temp.val(getSelectionText()).select();
+    document.execCommand("copy");
+    $temp.remove();
   };
 
   var toggleMenuOn = function() {
@@ -24,6 +102,7 @@ niv.plugins.contextmenu = niv.plugins.contextmenu || {};
 
   var toggleMenuOff = function() {
     $("#plugin-context-menu").attr("data-active", "false");
+    toggelExtensionOff();
   };
 
   var getClickCords = function(e) {
@@ -79,6 +158,11 @@ niv.plugins.contextmenu = niv.plugins.contextmenu || {};
   // hide context menu on mouse left click or window resize
   var configureEventListeners = function() {
     $(document).on("click", function(e) {
+      var targetElement = e.target;
+      if ($(targetElement).hasClass("context-menu-item")) {
+        return;
+      }
+
       var button = e.which || e.button;
       if (button === 1) {
         toggleMenuOff();
@@ -91,20 +175,14 @@ niv.plugins.contextmenu = niv.plugins.contextmenu || {};
   };
 
   var initContextListener = function(targetElement) {
-    window.onload = function() {
-      // $(targetElement).off("contextmenu");
-      $(targetElement).contextmenu(function(e) {
-        if (checkClickedInsideElement(e, targetElement)) {
-          e.preventDefault();
-          e.stopPropagation();
+    // $(targetElement).off("contextmenu");
+    $(targetElement).contextmenu(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-          toggleMenuOn();
-          positionContextMenu(e);
-        } else {
-          toggleMenuOff();
-        }
-      });
-    };
+      toggleMenuOn();
+      positionContextMenu(e);
+    });
   };
 
   this.init = function(targetElement, options) {
@@ -118,7 +196,7 @@ niv.plugins.contextmenu = niv.plugins.contextmenu || {};
 }.apply(niv.plugins.contextmenu));
 
 (function($) {
-  $.fn.contextmenu = function(options) {
+  $.fn.customContextMenu = function(options) {
     var settings = $.extend(
       {
         label: "Select Options"

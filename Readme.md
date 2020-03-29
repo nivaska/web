@@ -1,8 +1,15 @@
-# MultiSelect Dropdown
+# The repository has contains several Jquery plugins inside the folder "plugins"
+
+## Following plugins are available
+
+- Multiselect dropdown
+- Custom Context Menu
+
+## MultiSelect Dropdown
 
 This is a jquery plugin to create multiselect html dropdown
 
-## Usage
+### Usage
 
 ```javascript
 $("#testDiv").multiselect();

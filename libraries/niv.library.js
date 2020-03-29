@@ -46,6 +46,14 @@ niv.utils.dom = niv.utils.dom || {};
 }.apply(niv.utils));
 
 (function() {
+  this.checkClickedInsideElement = function(e, parentElement) {
+    var el = e.srcElement || e.target;
+    if ($(parentElement).has(el)) {
+      return el;
+    }
+    return false;
+  };
+
   this.getClickCords = function(e) {
     var posx = 0;
     var posy = 0;
