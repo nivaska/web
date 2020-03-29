@@ -1,6 +1,4 @@
-# The repository has contains several Jquery plugins inside the folder "plugins"
-
-## Following plugins are available
+## Jquery plugins in the repo
 
 - Multiselect dropdown
 - Custom Context Menu
@@ -37,3 +35,5 @@ $("#testDiv").multiselect({
 ```
 
 ![Example](readme-img-1.jpg)
+
+## Custom Context Menu
